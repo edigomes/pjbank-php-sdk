@@ -45,10 +45,13 @@ class Emissor
 
             $resource = "recebimentos/{$this->boleto->getCredencialBoleto()}/transacoes";
 
-            $res = $client->request('POST',  $resource, ['json' => $boletoItens, 'headers' => [
-                'Content-Type' => 'Application/json',
-                'X-CHAVE' => $this->boleto->getChaveBoleto()
-            ]]);
+            $res = $client->request('POST', $resource, [
+                'form_params' => $boletoItens,
+                'headers' => [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'X-CHAVE' => $this->boleto->getChaveBoleto()
+                ]
+            ]);
 
             return json_decode((string) $res->getBody());
 
